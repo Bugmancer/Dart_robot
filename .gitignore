@@ -1,0 +1,26 @@
+# Keil/ARM build outputs
+MDK-ARM/Dart_Project/*
+!MDK-ARM/Dart_Project/
+!MDK-ARM/Dart_Project/Dart_Project.sct
+
+# Keil user/session files
+MDK-ARM/*.uvguix.*
+MDK-ARM/DebugConfig/
+MDK-ARM/RTE/Device/
+MDK-ARM/RTE/RTE_Components.h
+MDK-ARM/startup_*.lst
+
+# Object/dependency files generated outside the build directory
+*.o
+*.d
+*.crf
+*.iex
+*.lnp
+*.map
+*.axf
+*.hex
+*.dep
+*.build_log.htm
+
+# Backup files
+*.Bak

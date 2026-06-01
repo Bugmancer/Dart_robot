@@ -1,0 +1,25 @@
+#ifndef _SHOOT_MOTOR_DATA_
+#define _SHOOT_MOTOR_DATA_
+
+#define OUTSIDE_MOTOR_SPEED_PID_KP          10.0f
+#define OUTSIDE_MOTOR_SPEED_PID_KI          0.0f
+#define OUTSIDE_MOTOR_SPEED_PID_KD          0.0f
+#define OUTSIDE_MOTOR_SPEED_PID_MAX_OUT     16000.0f
+#define OUTSIDE_MOTOR_SPEED_PID_MAX_IOUT    4000.0f 
+
+#define INSIDE_MOTOR_SPEED_PID_KP          50.0f
+#define INSIDE_MOTOR_SPEED_PID_KI          5.0f
+#define INSIDE_MOTOR_SPEED_PID_KD          0.0f
+#define INSIDE_MOTOR_SPEED_PID_MAX_OUT     16000.0f
+#define INSIDE_MOTOR_SPEED_PID_MAX_IOUT    4000.0f 
+
+
+//#define INSIDE_MOTOR_SPEED_PID_KP          10.0f
+//#define INSIDE_MOTOR_SPEED_PID_KI          8.0f
+//#define INSIDE_MOTOR_SPEED_PID_KD          27.5f
+//#define INSIDE_MOTOR_SPEED_PID_MAX_OUT     16000.0f
+//#define INSIDE_MOTOR_SPEED_PID_MAX_IOUT    4000.0f 
+
+
+
+#endif
