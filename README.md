@@ -44,7 +44,7 @@ CAN 反馈 0x201
 相关文件：
 
 - `MDK-ARM/APP/shoot.c`：3508 拉绳电机状态机。
-- `Core/Src/freertos.c`：2 ms 周期任务，调用 `shoottask()` 并发送 CAN 电流。
+- `Core/Src/freertos.c`：`guangdian` 任务，调用 `shoottask()` 并发送 CAN 电流。循环里有 `osDelay(2)`，但 VOFA 调试数据是阻塞发送（约 2.4 ms），实际周期约 4.4 ms。
 - `MDK-ARM/Behaviors/Can_receive/Can_receive.c`：电机反馈解析和 CAN 电流帧打包。
 - `MDK-ARM/APP/shoot_task/shoot_task.c`：供弹状态，以及拉绳逻辑需要共享的标志位。
 
@@ -58,4 +58,10 @@ CAN 反馈 0x201
 
 - `allow_flag`：`shoot_task.c` 会用它判断供弹行为。
 - `roll_flag`：拉绳逻辑和供弹逻辑都会使用，不能改成 `static`。
+- `Shoot_move.Dart_cnt`：每发完一发加一，用来索引 `Shoot_Dart_Data[DART_DATA_NUM]`，到最后一格后不再增加。
+
+## 用 CubeMX 重新生成代码的注意事项
+
+- `TIM2_IRQHandler` 和 `TIM8_CC_IRQHandler` 写在 `MDK-ARM/APP/Chassis_task/chassis_task.c`，用于步进电机脉冲计数。重新生成前要在 NVIC 的 Code generation 里取消这两个中断的 Generate IRQ handler，否则 `stm32f4xx_it.c` 会再生成一份，链接时重复定义。
+- FreeRTOS 任务的优先级和栈大小以 `Dart_Project.ioc` 为准，改 `freertos.c` 里的 `osThreadDef` 会被覆盖。
 

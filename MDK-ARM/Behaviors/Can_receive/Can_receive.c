@@ -2,9 +2,10 @@
 
 /* 第一个 3508 拉绳电机的编码器跨圈判断参数。 */
 #define MOTOR_ECD_WRAP_THRESHOLD    5000
-#define MOTOR_ECD_FULL_RANGE        8191
+#define MOTOR_ECD_FULL_RANGE        8192  /* 编码器 0-8191，一圈 8192 个计数 */
 
-/* 这些全局变量仍被 shoot.c 使用，因此保留原变量名。 */
+/* flag_CR/rou 是跨圈状态，length 是展开后的多圈行程。shoot.c 用自己的计数器，
+ * 不读取这里的值；保留为全局变量方便在调试窗口观察。 */
 int flag_CR;
 int rou;
 long length;
@@ -181,13 +182,14 @@ void canfilter_init_start(void)
     can_filter_st.FilterMaskIdHigh = 0x0000;
     can_filter_st.FilterMaskIdLow = 0x0000;
     can_filter_st.FilterBank = 0;
+    /* HAL 在配置 CAN1 时也会把该字段写入 FMR.CAN2SB，必须先初始化。 */
+    can_filter_st.SlaveStartFilterBank = 14;
     can_filter_st.FilterFIFOAssignment = CAN_RX_FIFO0;
 
     HAL_CAN_ConfigFilter(&hcan1, &can_filter_st);
     HAL_CAN_Start(&hcan1);
     HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
-    can_filter_st.SlaveStartFilterBank = 14;
     can_filter_st.FilterBank = 14;
     HAL_CAN_ConfigFilter(&hcan2, &can_filter_st);
     HAL_CAN_Start(&hcan2);

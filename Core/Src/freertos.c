@@ -29,9 +29,10 @@
 #include "chassis_task.h"
 #include "shoot_task.h"
 #include "switch.h"
-#include "CAN_receive.h"
+#include "Can_receive.h"
 #include "shoot.h"
 #include "remote_control.h"
+#include "usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,7 +42,6 @@ switch_flag flag;
 int k1 = 0;
 const Revice_Motro_Data *motor_data_rtos;
 float vofa[6];
-UART_HandleTypeDef huart7;
 double Len;
 int out;
 const RC_ctrl_t *rc_ctrl_rtos;
@@ -228,7 +228,8 @@ void StartTask04(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-		/* 保留原有 VOFA 调试输出，同时执行 2 ms 控制周期。 */
+		/* VOFA 调试输出：HAL_UART_Transmit 是阻塞发送，115200 下 28 字节约 2.4 ms，
+		 * 加上 osDelay(2)，实际控制周期约 4.4 ms。 */
 		z_f = read_flag();
 		rc_ctrl_rtos = get_remote_control_point();
 
@@ -243,7 +244,7 @@ void StartTask04(void const * argument)
 		out = shoottask(motor_data_rtos, 800);
 
 		/* 发送 CAN 电流前先判断遥控急停，急停优先级最高。 */
-		if (rc_ctrl_rtos->rc.s[0] == 2)
+		if (rc_ctrl_rtos->rc.s[0] == RC_SW_DOWN)
 		{
 			CAN_cmd_shoot(0, 0, 0, 0);
 		}

@@ -1,4 +1,4 @@
-#include "Shoot_task.h"
+#include "shoot_task.h"
 #include "stdio.h"
 #include "tim.h"
 #include "usart.h" //重定向用
@@ -345,7 +345,9 @@ static void SHOOT_RC_Analsye(void)
 		//temp1 = 1;
 		if(Shoot_move.ammo_flag ==1){
 		Shoot_move.ammo_flag =0;
-		Shoot_move.Dart_cnt++;
+		//Dart_cnt 用来索引 Shoot_Dart_Data[DART_DATA_NUM]，超过最后一格会改写结构体后面的成员
+		if(Shoot_move.Dart_cnt < DART_DATA_NUM - 1)
+			Shoot_move.Dart_cnt++;
 			count++;
 		
 		}

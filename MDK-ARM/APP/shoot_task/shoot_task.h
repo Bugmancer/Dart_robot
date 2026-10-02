@@ -68,12 +68,15 @@ typedef struct
   float  	yaw_add;
 }Shoot_Dart_Data_t;
 
+//Shoot_Dart_Data 的槽位数，Dart_cnt 只能在 0 ~ DART_DATA_NUM-1 之间
+#define DART_DATA_NUM 6
+
 typedef struct 
 {
 	const RC_ctrl_t* Shoot_remote_realte;
 		
 	Shoot_Motor_Data_t Outside_Shoot_Motor_Data[5]; //外侧摩擦轮电机数据接收结构体
-	Shoot_Dart_Data_t  Shoot_Dart_Data[6];
+	Shoot_Dart_Data_t  Shoot_Dart_Data[DART_DATA_NUM];
 	
 	uint16_t first_lv_speed;
 	uint16_t second_lv_speed;

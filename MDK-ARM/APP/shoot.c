@@ -1,9 +1,9 @@
 #include "shoot.h"
 #include "main.h"
-#include "CAN_receive.h"
+#include "Can_receive.h"
 #include "pid.h"
 #include "remote_control.h"
-#include "Shoot_task.h"
+#include "shoot_task.h"
 
 /*
  * 3508 拉绳电机控制。

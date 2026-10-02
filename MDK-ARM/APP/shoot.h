@@ -2,7 +2,7 @@
 #define SHOOT_H
 
 #include "struct_typedef.h"
-#include "CAN_receive.h"
+#include "Can_receive.h"
 #include "switch.h"
 
 void shootint(const Revice_Motro_Data *shoot);
